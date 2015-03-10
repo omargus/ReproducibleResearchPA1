@@ -149,11 +149,13 @@ The mean number of steps observed each day after imputing the missing values wit
 The imputation of the missing values has no effect on the mean sum of steps per day.  This is due to the fact that all the missing measurements fall on 8 days where no data is available.  Therefore the sum of each of these days is the mean of all the other days. The median value is not the same as with the un-imputed data but changes slightly and becomes the same as the mean.  This is beacuse 8 values of the mean are added to the dataset.
 All in all the imputation does not have a significant effect on the results, this is partly due to the fact that the imputation is very rudimentary and might not be approriate in this case.
 
+Lastly I look at the difference between Weekdays and Weekend in the data.  For that I look at the mean of each interval for weekends and weekdays. The results are plotted in the panel-plot below.
 
 
 ```r
 library(ggplot2)
 library(scales)
+#laugardagur=Saturday and sunnudagur=Sunday, could not change language settings to english for R-markdown
 activity_imputed$WeekDay_End[!weekdays(activity_imputed$date) %in% c('laugardagur', 'sunnudagur') ] <- 'Weekday'
 activity_imputed$WeekDay_End[weekdays(activity_imputed$date) %in% c('laugardagur', 'sunnudagur') ] <- 'Weekend'
 activity_imputed$WeekDay_End <- as.factor(activity_imputed$WeekDay_End)
@@ -163,4 +165,4 @@ ggplot(Mean_steps_per_timeofDay_Weekend_Weekday,aes(x=strptime(time,"%H:%M"), y=
 ```
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
-
+The two plots clearly shows that there is a clear difference between weekdays and weekends in terms of number of steps, where the activity starts earlier in the weekdays and there is a very large peak around 8:00.  The weekends on the other hand have a more even activity over the day with fewer and shorter periods of activity below 50 steps per interval. 
